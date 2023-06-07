@@ -1,51 +1,105 @@
 import { Link, Navigate, redirect ,useNavigate} from "react-router-dom"
-import { useState,useEffect } from "react"
+import {useRef, useState,useEffect } from "react"
 import axios from "axios";
-import { Route,Routes } from "react-router-dom";
+import {Links, Route,Routes } from "react-router-dom";
 import style from '../../scss/registerForm.module.scss'
 function register() {
-    var inputName = document.getElementById('inputName');
-    var inputNameMessage = document.getElementById('inputNameMessage')
-    var inputEmailMessage = document.getElementById('inputEmailMessage')
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [userName,setUserName] = useState('');
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [userMail,setUserMail] = useState('');
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [userPass,setUserPass] = useState('');
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [reUserPass,setReUserPass] = useState('');
+    
+    const inputName = document.getElementById('inputName');
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    var [inputNameMessage,setInputNameMessage] = useState(' ');
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    var [inputEmailMessage,setInputEmailMessage] = useState(' ');
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    var [inputPassMessage,setInputPassMessage] = useState(' ');
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    var [inputRePassMessage,setInputRePassMessage] = useState(' ');
+
 
     function handleOnChangeName(e) {
         setUserName(e.target.value)
         inputName.onblur=(() => {
             if(!inputName.value){
-                inputNameMessage.innerText = 'Tên của bạn không được để trống!!!'
+                setInputNameMessage('Tên của bạn không được để trống!!!')
             }
             else {
-                inputNameMessage.innerText = ''
+                setInputNameMessage('')
             }
         })
     }
 
     function handleOnChangeEmail(e){
+        var api = 'http://localhost:4000/userinfor'
+        fetch(api)
+            .then(reponse => reponse.json())
+            .then(userInfor => {
+                for(var i = 0; i < userInfor.length ; i ++){
+                    if(userInfor[i].email == e.target.value){
+                        setInputEmailMessage('Email này đã được sử dụng, vui lòng đăng nhập')
+                    }
+                }
+        })
+
         setUserMail(e.target.value)
 
         const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
         if(mailFormat.test(e.target.value) == false){
-            inputEmailMessage.innerText ='Định dạng email chưa chính xác'
+            setInputEmailMessage('Định dạng email chưa chính xác')
         }
         else{
-            inputEmailMessage.innerText =''
+            setInputEmailMessage('')
         }
     }
-    function handleSubmit(e){
-        e.preventDefault();
-        const newUserInfor = {
-            name : userName,
-            email : userMail,
-            password : userPass
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    function handleOnChangePass(e){
+        setUserPass(e.target.value)
+
+        const passRegex = /^(?=.*\d)(?=.*[a-z]).{6,20}$/
+        if(passRegex.test(e.target.value) == false){
+            setInputPassMessage('Mật khẩu từ 6 đến 20 ký tự,bao gồm ít nhất 1 chữ cái và 1 số')
         }
-        axios.post('http://localhost:4000/userinfor/add',newUserInfor)
-            .then(res => console.log(res.data))
+        else{
+            setInputPassMessage('')
+        }
+    }
+
+    function handleOnChangeRePass(e) {
+        setReUserPass(e.target.value)
+        var inputPassField = document.getElementById('inputPassField')
+        var reinputPassField = document.getElementById('reinputPassField')
+
+        if(inputPassField.value !== reinputPassField.value){
+            setInputRePassMessage('Mật khẩu không trùng khớp!!!');
+        }
+        else {
+            setInputRePassMessage('');
+        }
+    }
+
+    function handleSubmit(e){
+        if(inputNameMessage == '' && inputEmailMessage == '' && inputPassMessage =='' && inputRePassMessage == ''){
+            e.preventDefault();
+            const newUserInfor = {
+                name : userName,
+                email : userMail,
+                password : userPass
+            }
+            axios.post('http://localhost:4000/userinfor/add',newUserInfor)
+                .then(res => console.log(res.data))
+            setUserName('')
+            setReUserPass('')
+            setUserPass('')
+            setUserMail('')
+            window.location.href = '/home'
+        }
     }
     return <div>
         <section className="vh-100" style={{backgroundColor : '#eee'}}>
@@ -66,7 +120,7 @@ function register() {
                                 <div className="form-outline flex-fill mb-0">
                                 <label className="form-label" for="form3Example1c">Your Name</label>
                                 <input value={userName} type="text" id="inputName" className="form-control" name="name" onChange={handleOnChangeName}/>
-                                <label id="inputNameMessage" className={style.statusMessage}></label>
+                                <label id="inputNameMessage" className={style.statusMessage}>{inputNameMessage}</label>
                                 </div>
                             </div>
 
@@ -75,7 +129,7 @@ function register() {
                                 <div className="form-outline flex-fill mb-0">
                                 <label className="form-label" for="form3Example3c">Your Email</label>
                                 <input value={userMail} type="email" id="form3Example3c" className="form-control" name="email" onChange={handleOnChangeEmail}/>
-                                <label id="inputEmailMessage" className={style.statusMessage}></label>
+                                <label id="inputEmailMessage" className={style.statusMessage}>{inputEmailMessage}</label>
                                 </div>
                             </div>
 
@@ -83,7 +137,8 @@ function register() {
                                 <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                                 <div className="form-outline flex-fill mb-0">
                                 <label className="form-label" for="form3Example4c">Password</label>
-                                <input value={userPass} type="password" id="form3Example4c" className="form-control" name="password" onChange={function(e){setUserPass(e.target.value)}}/>
+                                <input value={userPass} type="password" id="inputPassField" className="form-control" name="password" onChange={handleOnChangePass}/>
+                                <label className={style.statusMessage}>{inputPassMessage}</label>
                                 </div>
                             </div>
 
@@ -91,7 +146,8 @@ function register() {
                                 <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                                 <div className="form-outline flex-fill mb-0">
                                 <label className="form-label" for="form3Example4cd">Repeat your password</label>
-                                <input type="password" id="form3Example4cd" className="form-control" />
+                                <input value={reUserPass} type="password" id="reinputPassField" className="form-control" onChange={handleOnChangeRePass}/>
+                                <label className={style.statusMessage}>{inputRePassMessage}</label>
                                 </div>
                             </div>
 
@@ -117,23 +173,23 @@ function register() {
             </div>
             
         </section>
-                                <div className="modal fade" id="confirmLogin" tabindex="-1" aria-labelledby="confirmLoginLabel" aria-hidden="true">
-                                    <div className="modal-dialog">
-                                        <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h1 className="modal-title fs-5" id="confirmLoginLabel">Modal title</h1>
-                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div className="modal-body">
-                                            ...
-                                        </div>
-                                        <div className="modal-footer">
-                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" className="btn btn-primary">Save changes</button>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
+            <div className="modal fade" id="confirmLogin" tabindex="-1" aria-labelledby="confirmLoginLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="confirmLoginLabel">Modal title</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            ...
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 }
 export default register
