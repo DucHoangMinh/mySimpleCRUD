@@ -98,6 +98,7 @@ function register() {
             setReUserPass('')
             setUserPass('')
             setUserMail('')
+            localStorage.setItem('userMail',userMail)
             window.location.href = '/home'
         }
     }

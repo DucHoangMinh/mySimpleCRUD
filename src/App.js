@@ -7,6 +7,7 @@ import {Routes, Route, Link } from 'react-router-dom';
 
 import Register from './components/login/register.component';
 import Home from './components/mainProgram/home.component'
+import Add from './components/mainProgram/add.component';
 class App extends Component {
   render() {
     return (
@@ -15,6 +16,7 @@ class App extends Component {
               <Route path='/' element={ <Login/>} />
               <Route path='/register' element={ <Register/>} />
               <Route path='/home' element={<Home/>}/>
+              <Route path='/add' element={<Add/>}></Route>
            </Routes>
         </div>
     );
