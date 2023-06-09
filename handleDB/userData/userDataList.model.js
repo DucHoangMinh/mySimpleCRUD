@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const slug = require('mongoose-slug-updater');
 const Schema = mongoose.Schema;
-
+mongoose.plugin(slug);
 let userDataList = new Schema(
     {
         name: {
@@ -18,6 +19,12 @@ let userDataList = new Schema(
         photoURL: {
             type: String,
             default: '',
+        },
+        //Tự động tạo slug
+        slug: {
+            type: String,
+            slug: ['name', 'owner'],
+            unique: true,
         },
     },
     {

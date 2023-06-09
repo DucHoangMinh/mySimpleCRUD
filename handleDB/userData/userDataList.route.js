@@ -23,4 +23,20 @@ userDataRoute.route('/add').post(function (req, res) {
             res.status(400).send('unable to save to database');
         });
 });
+
+//Xử lý request ở trang home,trả về danh sách sản phẩm tương ứng của tài khoản đó
+userDataRoute.get('/:slug', function (req, res) {
+    userDataListModel
+        .find({ owner: `${req.params.slug}` })
+        .lean()
+        .then((userdatalist) => res.json(userdatalist));
+});
+
+//Xử lý request trả về đối tượng có slug tương ứng
+userDataRoute.get('/owner/:slug', function (req, res) {
+    userDataListModel
+        .find({ slug: `${req.params.slug}` })
+        .lean()
+        .then((userdatalist) => res.json(userdatalist));
+});
 module.exports = userDataRoute;
