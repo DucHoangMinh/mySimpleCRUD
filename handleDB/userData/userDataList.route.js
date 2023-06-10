@@ -39,4 +39,19 @@ userDataRoute.get('/owner/:slug', function (req, res) {
         .lean()
         .then((userdatalist) => res.json(userdatalist));
 });
+userDataRoute.put('/owner/update/:slug', function (req, res) {
+    userDataListModel
+        .updateOne(
+            { slug: `${req.params.slug}` },
+            {
+                name: req.body.name,
+                description: req.body.description,
+                price: req.body.price,
+            },
+        )
+        .then((result) => console.log(result))
+        .catch((err) => {
+            console.error(err);
+        });
+});
 module.exports = userDataRoute;

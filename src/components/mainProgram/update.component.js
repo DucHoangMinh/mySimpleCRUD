@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { storage } from '../../firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 function update() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -31,13 +31,17 @@ function update() {
     const url = window.location.href;
     const slug = url.substring(url.lastIndexOf('/') + 1);
 
-    axios.get('http://localhost:4000/userdata/owner/' + slug).then((response) => {
-        console.log(response.data);
-        setName(response.data[0].name);
-        setOldName(response.data[0].name);
-        setDescrip(response.data[0].description);
-        setPrice(response.data[0].price);
-    });
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+        axios.get('http://localhost:4000/userdata/owner/' + slug).then((response) => {
+            setName(response.data[0].name);
+            setOldName(response.data[0].name);
+            setDescrip(response.data[0].description);
+            setPrice(response.data[0].price);
+            setPImageURL(response.data[0].photoURL);
+        });
+        // Thực hiện các hành động khi component được tạo ra hoặc được cập nhật
+    }, []);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -66,7 +70,8 @@ function update() {
             setOkStatus(true);
         }
     }
-    function handleAdd() {
+    function handleUpdate() {
+        handleClose();
         var newProductObject = {
             name: name,
             owner: localStorage.getItem('userMail'),
@@ -74,7 +79,12 @@ function update() {
             price: price,
             photoURL: pImagURL,
         };
-        axios.post('http://localhost:4000/userdata/add', newProductObject).then((res) => console.log(res.data));
+        axios
+            .put('http://localhost:4000/userdata/owner/update/' + slug, newProductObject)
+            .then((response) => this.setState({ updatedAt: response.data.updatedAt }))
+            .catch((error) => {
+                console.error('There was an error!', error);
+            });
         window.location.href = '/home';
     }
     return (
@@ -144,13 +154,22 @@ function update() {
                 <Modal.Header closeButton>
                     <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Bạn có chắc chắn muốn thêm sản phẩm {name} vào danh sách?</Modal.Body>
+                <Modal.Body>
+                    <p>
+                        Thông tin mới của sản phẩm :<br />
+                        Tên sản phẩm : {name}
+                        <br />
+                        Mô tả sản phẩm : {descrip}
+                        <br />
+                        Giá sản phẩm : {price}
+                    </p>
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Đóng
                     </Button>
-                    <Button onClickCapture={handleAdd} variant="primary" onClick={handleClose}>
-                        Thêm
+                    <Button variant="primary" onClick={handleUpdate}>
+                        Xác nhận thay đổi
                     </Button>
                 </Modal.Footer>
             </Modal>
