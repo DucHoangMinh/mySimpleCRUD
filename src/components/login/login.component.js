@@ -26,7 +26,7 @@ function login() {
                     for (var i = 0; i < userInfor.length; i++) {
                         if (email == userInfor[i].email) {
                             if (userInfor[i].password !== password) {
-                                setLogInMessage('Sai mật khẩu');
+                                setLogInMessage('Sai mật khẩu, vui lòng thử lại');
                             } else {
                                 localStorage.setItem('userMail', email);
                                 window.location.href = '/home';

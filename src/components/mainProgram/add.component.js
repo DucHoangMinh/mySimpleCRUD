@@ -17,7 +17,9 @@ function add() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [pimage, setPimage] = useState(0);
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [pImagURL, setPImageURL] = useState('');
+    const [pImagURL, setPImageURL] = useState(
+        'https://firebasestorage.googleapis.com/v0/b/my-simple-crud-f5b5c.appspot.com/o/files%2Fdefault-no-image.jpg?alt=media&token=e7080211-cf47-4a6b-a0fb-d5b98fd9ccbd&_gl=1*1qh88xg*_ga*ODQ0NzA4MzcyLjE2ODYyMzczNzM.*_ga_CW55HF8NVT*MTY4NjM4OTQ0NS41LjEuMTY4NjM4OTYxOS4wLjAuMA..',
+    );
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [okStatus, setOkStatus] = useState(false);
@@ -103,9 +105,10 @@ function add() {
                         Ảnh sản phẩm
                     </label>
                     <br />
-                    <label class="custom-file-label" for="customFile">
-                        Choose file
+                    <label class="custom-file-label" for="customFile" mb-4>
+                        Tải lên file ảnh sản phẩm của bạn :
                     </label>
+                    <br />
                     <input
                         type="file"
                         class="custom-file-input"

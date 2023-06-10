@@ -4,6 +4,7 @@ import { storage } from '../../firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 function update() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [show, setShow] = useState(false);
@@ -26,7 +27,7 @@ function update() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [message, setMessage] = useState('');
     const handleClose = () => setShow(false);
-    const handleShow = () => okStatus && setShow(true);
+    const handleShow = () => setShow(true);
 
     const url = window.location.href;
     const slug = url.substring(url.lastIndexOf('/') + 1);
@@ -43,33 +44,6 @@ function update() {
         // Thực hiện các hành động khi component được tạo ra hoặc được cập nhật
     }, []);
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        if (pimage !== null) {
-            const storageRef = ref(storage, `files/${pimage.name}`);
-            const uploadTask = uploadBytesResumable(storageRef, pimage);
-            uploadTask.on(
-                'state_changed',
-                (snapshot) => {
-                    const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                },
-                (error) => {
-                    alert(error);
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        console.log(downloadURL);
-                        setPImageURL(downloadURL);
-                    });
-                },
-            );
-        }
-        if (name == '' || descrip == '') {
-            setMessage('Các trường tên, mô tả không được để trống!!!');
-        } else {
-            setOkStatus(true);
-        }
-    }
     function handleUpdate() {
         handleClose();
         var newProductObject = {
@@ -89,9 +63,9 @@ function update() {
     }
     return (
         <div>
-            <h3>Thay đổi thông tin của sản phẩm {oldName}</h3>
-            <form>
-                <div class="form-group mb-4">
+            <h3 mb-4>Thay đổi thông tin của sản phẩm {oldName}</h3>
+            <form mt-4>
+                <div class="form-group mb-8">
                     <label for="formGroupExampleInput">Tên sản phẩm</label>
                     <input
                         value={name}
@@ -146,9 +120,18 @@ function update() {
                     <p>Lưu ý, chúng tôi chưa hỗ trợ chức năng thay đổi ảnh sản phẩm !!!</p>
                 </div>
             </form>
-            <Button type="button" onClickCapture={handleSubmit} variant="primary" onClick={handleShow}>
-                Thay đổi thông tin
-            </Button>
+            <div className="row justify-content-between">
+                <Link to={'/home'} class="col-3">
+                    <Button type="button" variant="primary" onClick={handleShow}>
+                        Hủy bỏ mọi thay đổi
+                    </Button>
+                </Link>
+                <Link class="col-3">
+                    <Button type="button" variant="success" onClick={handleShow}>
+                        Thay đổi thông tin
+                    </Button>
+                </Link>
+            </div>
             <p className="text-danger">{message}</p>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

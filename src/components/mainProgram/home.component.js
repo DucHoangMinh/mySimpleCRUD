@@ -8,10 +8,14 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import style from '../../scss/home.module.scss';
+import Modal from 'react-bootstrap/Modal';
+
 function home() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [userData, setUserData] = useState([]);
     const userMail = localStorage.getItem('userMail');
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [modalShow, setModalShow] = useState(false);
     const getUserData = function () {
         axios
             .get(`http://localhost:4000/userdata/${userMail}`)
@@ -23,11 +27,14 @@ function home() {
             });
     };
     getUserData();
+    function handleDelete(slug) {
+        // axios.delete(`http://localhost:4000/userdata/delete/${slug}`);
+    }
     return (
         <div>
             <Navbar bg="light" expand="lg">
                 <Container fluid>
-                    <Navbar.Brand href="#">Trang chủ</Navbar.Brand>
+                    <Link to={'/home'}>Trang chủ</Link>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                         <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
@@ -52,28 +59,39 @@ function home() {
                     <div class="row">
                         {userData.map(function (data) {
                             return (
-                                <div class="col-lg-4 mb-4" key={data.name}>
+                                <div class="col-lg-3 mb-4" key={data.name}>
                                     <div class={`card`}>
-                                        <img src={data.photoURL} alt="Ảnh bị lỗi" class="card-img-top" />
+                                        <img src={data.photoURL} alt="Ảnh bị lỗi" class={style['card-img']} />
                                         <div class="card-body">
-                                            <h5 class="card-title">{data.name}</h5>
-                                            <p class="card-text">{data.description}</p>
-                                            <p class="card-text">Giá : {data.price}</p>
+                                            <h5 class={style['card-title']}>{data.name}</h5>
+                                            <p class={style['card-text']}>{data.description}</p>
+                                            <p class={style['card-price']}>Giá : {data.price} vnđ</p>
                                             <Link
                                                 to={{ pathname: `/home/update/${data.slug}`, state: `${data.name}` }}
                                                 class="btn btn-outline-success btn-sm"
                                             >
                                                 Chỉnh sửa
                                             </Link>
-                                            <a href="#" class="btn btn-outline-success btn-sm">
+                                            <Button
+                                                href="#"
+                                                class="btn btn-outline-warning"
+                                                onClick={() => setModalShow(true)}
+                                            >
                                                 Xóa
-                                            </a>
+                                            </Button>
                                         </div>
+                                        <Button
+                                            className="btn-warning"
+                                            onClick={handleDelete(data.slug)}
+                                            hidden={modalShow}
+                                        >
+                                            Xác nhận xóa
+                                        </Button>
                                     </div>
                                 </div>
                             );
                         })}
-                        <Link to={'/add'} class="col-lg-4 mb-4 add-button">
+                        <Link to={'/add'} class={`col-lg-3 mb-4 ${style.addButton}`}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="200"
