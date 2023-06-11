@@ -24,7 +24,9 @@ app.use(bodyParser.json());
 
 app.use('/userinfor', userInforRoute);
 app.use('/userdata', userDataRoute);
-
+app.get('/', (req, res) => {
+    res.send('Hey this is my API running 🥳');
+});
 app.listen(PORT, function () {
     console.log('Server is running on Port:', PORT);
 });
