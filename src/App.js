@@ -9,6 +9,7 @@ import Register from './components/login/register.component';
 import Home from './components/mainProgram/home.component';
 import Add from './components/mainProgram/add.component';
 import Update from './components/mainProgram/update.component';
+import RecycleBin from './components/mainProgram/recycleBin.component';
 
 class App extends Component {
     render() {
@@ -20,6 +21,7 @@ class App extends Component {
                     <Route path="/home" element={<Home />} />
                     <Route path="/add" element={<Add />}></Route>
                     <Route path="/home/update/:slug" element={<Update />}></Route>
+                    <Route path="/home/trash" element={<RecycleBin />}></Route>
                 </Routes>
             </div>
         );

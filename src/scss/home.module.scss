@@ -4,9 +4,9 @@
 .addButton {
     border: 3px solid var(--bs-dark-border-subtle);
     border-radius: 10px;
-    display: flex;
     align-items: center;
     justify-content: center;
+    // box-sizing: border-box;
 }
 .card-title {
     line-height: 1.5rem;
@@ -28,4 +28,14 @@
 .card-img {
     width: 100%;
     // height: 253px;
+}
+.sub-card-title {
+    color: #000;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+}
+.text-decoration-none {
+    text-decoration: none;
 }

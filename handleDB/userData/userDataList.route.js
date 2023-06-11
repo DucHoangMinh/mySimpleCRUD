@@ -6,7 +6,7 @@ const userDataListModel = require('./userDataList.model');
 //show API
 userDataRoute.get('/', function (req, res) {
     userDataListModel
-        .find({})
+        .find({ onGarbage: false })
         .lean()
         .then((userdatalist) => res.json(userdatalist));
 });
@@ -24,14 +24,20 @@ userDataRoute.route('/add').post(function (req, res) {
         });
 });
 
-//Xử lý request ở trang home,trả về danh sách sản phẩm tương ứng của tài khoản đó
+//Xử lý request ở trang home,trả về danh sách sản phẩm tương ứng không để trong thùng rác
 userDataRoute.get('/:slug', function (req, res) {
     userDataListModel
-        .find({ owner: `${req.params.slug}` })
+        .find({ owner: `${req.params.slug}`, onGarbage: false })
         .lean()
         .then((userdatalist) => res.json(userdatalist));
 });
-
+//Xử lý request ở trang garbage,trả về danh sách sản phẩm tương ứng trong thùng rác
+userDataRoute.get('/trash/:slug', function (req, res) {
+    userDataListModel
+        .find({ owner: `${req.params.slug}`, onGarbage: true })
+        .lean()
+        .then((userdatalist) => res.json(userdatalist));
+});
 //Xử lý request trả về đối tượng có slug tương ứng
 userDataRoute.get('/owner/:slug', function (req, res) {
     userDataListModel
@@ -49,6 +55,29 @@ userDataRoute.put('/owner/update/:slug', function (req, res) {
                 price: req.body.price,
             },
         )
+        .then((result) => console.log(result))
+        .catch((err) => {
+            console.error(err);
+        });
+});
+//soft delete
+userDataRoute.put('/softdelete/:slug', function (req, res) {
+    userDataListModel
+        .updateOne(
+            { slug: `${req.params.slug}` },
+            {
+                onGarbage: req.body.onGarbage,
+            },
+        )
+        .then((result) => console.log(result))
+        .catch((err) => {
+            console.error(err);
+        });
+});
+//permanently delete
+userDataRoute.delete('/trash/delete/:slug', function (req, res) {
+    userDataListModel
+        .deleteOne({ slug: `${req.params.slug}` })
         .then((result) => console.log(result))
         .catch((err) => {
             console.error(err);

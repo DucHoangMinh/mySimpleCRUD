@@ -20,6 +20,10 @@ let userDataList = new Schema(
             type: String,
             default: '',
         },
+        onGarbage: {
+            type: Boolean,
+            default: false,
+        },
         //Tự động tạo slug
         slug: {
             type: String,
