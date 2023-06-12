@@ -1,5 +1,8 @@
 // App.js
-
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Container } from 'react-bootstrap';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/login/login.component';
@@ -11,6 +14,10 @@ import Add from './components/mainProgram/add.component';
 import Update from './components/mainProgram/update.component';
 import RecycleBin from './components/mainProgram/recycleBin.component';
 
+function handleLogOut() {
+    localStorage.removeItem('userMail');
+    window.location.href = '/';
+}
 class App extends Component {
     render() {
         return (

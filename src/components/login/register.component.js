@@ -22,9 +22,12 @@ function register() {
     var [inputPassMessage, setInputPassMessage] = useState(' ');
     // eslint-disable-next-line react-hooks/rules-of-hooks
     var [inputRePassMessage, setInputRePassMessage] = useState(' ');
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    var [registerMessage, setRegisterMessage] = useState('');
 
     function handleOnChangeName(e) {
         setUserName(e.target.value);
+        setRegisterMessage('');
         inputName.onblur = () => {
             if (!inputName.value) {
                 setInputNameMessage('Tên của bạn không được để trống!!!');
@@ -35,6 +38,7 @@ function register() {
     }
 
     function handleOnChangeEmail(e) {
+        setRegisterMessage('');
         var api = 'http://localhost:4000/userinfor';
         fetch(api)
             .then((reponse) => reponse.json())
@@ -57,6 +61,7 @@ function register() {
     }
     // eslint-disable-next-line react-hooks/rules-of-hooks
     function handleOnChangePass(e) {
+        setRegisterMessage('');
         setUserPass(e.target.value);
 
         const passRegex = /^(?=.*\d)(?=.*[a-z]).{6,20}$/;
@@ -94,6 +99,8 @@ function register() {
             setUserMail('');
             localStorage.setItem('userMail', userMail);
             window.location.href = '/home';
+        } else {
+            setRegisterMessage('Vui lòng nhập đầy đủ các trường !!!');
         }
     }
     return (
@@ -193,17 +200,17 @@ function register() {
                                                         Have an account ? <Link to={'/'}>Sign in</Link>
                                                     </label>
                                                 </div>
-                                                <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                                    {/* <button type="submit" className="btn btn-primary btn-lg" target='#confirmLogin'>Register</button> */}
+                                                <div className=" mx-4 mb-3 mb-lg-4">
                                                     <button
                                                         type="button"
-                                                        className="btn btn-primary"
+                                                        className="btn btn-primary col-12 mb-4"
                                                         data-toggle="modal"
                                                         data-target="#confirmLogin"
                                                         onClick={handleSubmit}
                                                     >
-                                                        Register
+                                                        Đăng ký
                                                     </button>
+                                                    <label className="col-12">{registerMessage}</label>
                                                 </div>
                                             </form>
                                         </div>

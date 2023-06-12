@@ -32,14 +32,21 @@ function home() {
                 console.log(error);
             });
     }, []);
+    function handleLogOut() {
+        localStorage.removeItem('userMail');
+        window.location.href = '/';
+    }
     function handleDelete(slug) {
         axios.put(`http://localhost:4000/userdata/softdelete/` + slug, { onGarbage: true });
     }
+
     return (
         <div>
-            <Navbar bg="light" expand="lg">
+            <Navbar bg="light" expand="lg" className="mb-4">
                 <Container fluid>
-                    <Link to={'/home'}>Trang chủ</Link>
+                    <Link to={'/home'} style={{ textDecoration: 'none' }}>
+                        <h4 style={{ color: '#000', fontWeight: '700' }}>TRANG CHỦ</h4>
+                    </Link>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                         <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
@@ -49,7 +56,9 @@ function home() {
                             <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
                             <NavDropdown.Item href="#action4">Another action</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action5">Đăng xuất</NavDropdown.Item>
+                            <NavDropdown.Item href="#action5" onClick={handleLogOut}>
+                                Đăng xuất
+                            </NavDropdown.Item>
                         </NavDropdown>
                     </Navbar.Collapse>
                 </Container>
@@ -66,7 +75,14 @@ function home() {
                             return (
                                 <div class="col-lg-3 mb-4" key={data.name}>
                                     <div class={`card`} id="_card">
-                                        <img src={data.photoURL} alt="Ảnh bị lỗi" class={style['card-img']} />
+                                        <div style={{ minHeight: '298px' }}>
+                                            <img
+                                                id="cardImg"
+                                                src={data.photoURL}
+                                                alt="Ảnh bị lỗi"
+                                                class={style['card-img']}
+                                            />
+                                        </div>
                                         <div class="card-body">
                                             <h5 class={style['card-title']}>{data.name}</h5>
                                             <p class={style['card-text']}>{data.description}</p>

@@ -21,21 +21,22 @@ function recycleBin() {
     }, []);
     function handleRestore() {}
     function handleDeleteParmanent(slug, photoURL) {
-        // axios.delete(`http://localhost:4000/userdata/trash/delete/` + slug);
-        console.log(photoURL);
-        let pictureRef = storage.refFromURL(
-            'gs://my-simple-crud-f5b5c.appspot.com/o/files%2Fan-nut-nho-tha-giac-mo.jpg',
-        );
-        pictureRef
-            .delete()
-            .then(() => {
-                //3.
-                // setImages(allImages.filter((image) => image !== url));
-                alert('Picture is deleted successfully!');
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        axios.delete(`http://localhost:4000/userdata/trash/delete/` + slug);
+        window.location.href = '/home/trash';
+        // console.log(photoURL);
+        // let pictureRef = storage.refFromURL(
+        //     'gs://my-simple-crud-f5b5c.appspot.com/o/files%2Fan-nut-nho-tha-giac-mo.jpg',
+        // );
+        // pictureRef
+        //     .delete()
+        //     .then(() => {
+        //         //3.
+        //         // setImages(allImages.filter((image) => image !== url));
+        //         alert('Picture is deleted successfully!');
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     });
     }
     return (
         <div>
