@@ -4,6 +4,7 @@ import { storage } from '../../firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 function add() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [show, setShow] = useState(false);
@@ -65,7 +66,9 @@ function add() {
         axios
             .post('https://my-simple-crud-hlan.vercel.app/userdata/add', newProductObject)
             .then((res) => console.log(res.data));
-        window.location.href = '/home';
+        setTimeout(function () {
+            window.location.href = '/home';
+        }, 1000);
     }
     return (
         <div>

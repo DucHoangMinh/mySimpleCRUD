@@ -34,7 +34,7 @@ function update() {
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        axios.get('https://my-simple-crud-hlan.vercel.app/owner/' + slug).then((response) => {
+        axios.get('https://my-simple-crud-hlan.vercel.app/userdata/owner/' + slug).then((response) => {
             setName(response.data[0].name);
             setOldName(response.data[0].name);
             setDescrip(response.data[0].description);
@@ -54,12 +54,14 @@ function update() {
             photoURL: pImagURL,
         };
         axios
-            .put('https://my-simple-crud-hlan.vercel.app/owner/update/' + slug, newProductObject)
+            .put('https://my-simple-crud-hlan.vercel.app/userdata/owner/update/' + slug, newProductObject)
             .then((response) => this.setState({ updatedAt: response.data.updatedAt }))
             .catch((error) => {
                 console.error('There was an error!', error);
             });
-        window.location.href = '/home';
+        setTimeout(function () {
+            window.location.href = '/home';
+        }, 1000);
     }
     return (
         <div>

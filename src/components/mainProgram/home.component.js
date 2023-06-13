@@ -34,10 +34,15 @@ function home() {
     }, []);
     function handleLogOut() {
         localStorage.removeItem('userMail');
-        window.location.href = '/';
+        setTimeout(function () {
+            window.location.href = '/';
+        }, 1000);
     }
     function handleDelete(slug) {
         axios.put(`https://my-simple-crud-hlan.vercel.app/userdata/softdelete/` + slug, { onGarbage: true });
+        setTimeout(function () {
+            window.location.href = '/home';
+        }, 1000);
     }
 
     return (
@@ -94,7 +99,6 @@ function home() {
                                                 Chỉnh sửa
                                             </Link>
                                             <Button
-                                                href="/home"
                                                 class="btn btn-outline-warning"
                                                 onClick={() => handleDelete(data.slug)}
                                             >

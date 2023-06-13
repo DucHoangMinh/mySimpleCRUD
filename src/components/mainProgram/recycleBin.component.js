@@ -22,7 +22,9 @@ function recycleBin() {
     function handleRestore() {}
     function handleDeleteParmanent(slug, photoURL) {
         axios.delete(`https://my-simple-crud-hlan.vercel.app/userdata/trash/delete/` + slug);
-        window.location.href = '/home/trash';
+        setTimeout(function () {
+            window.location.href = '/home/trash';
+        }, 500);
         // console.log(photoURL);
         // let pictureRef = storage.refFromURL(
         //     'gs://my-simple-crud-f5b5c.appspot.com/o/files%2Fan-nut-nho-tha-giac-mo.jpg',
