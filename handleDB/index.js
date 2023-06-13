@@ -1,5 +1,5 @@
 // index.js
-const uri = 'mongodb+srv://hoangminhduc4125:hoangminhduc4125@cluster0.55ss9pa.mongodb.net/?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://hoangminhduc4125:hoangminhduc04122003@cluster0.s8cgc8w.mongodb.net/';
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
