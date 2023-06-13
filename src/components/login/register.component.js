@@ -100,7 +100,9 @@ function register() {
             setUserPass('');
             setUserMail('');
             localStorage.setItem('userMail', userMail);
-            window.location.href = '/home';
+            setTimeout(function () {
+                window.location.href = '/home';
+            }, 500);
         } else {
             setRegisterMessage('Vui lòng nhập đầy đủ các trường !!!');
         }
