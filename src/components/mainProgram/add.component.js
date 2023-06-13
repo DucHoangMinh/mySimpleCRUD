@@ -62,7 +62,9 @@ function add() {
             price: pprice,
             photoURL: pImagURL,
         };
-        axios.post('http://localhost:4000/userdata/add', newProductObject).then((res) => console.log(res.data));
+        axios
+            .post('https://my-simple-crud-hlan.vercel.app/userdata/add', newProductObject)
+            .then((res) => console.log(res.data));
         window.location.href = '/home';
     }
     return (

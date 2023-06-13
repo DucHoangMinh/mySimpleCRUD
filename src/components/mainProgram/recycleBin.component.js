@@ -11,7 +11,7 @@ function recycleBin() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(function () {
         axios
-            .get(`http://localhost:4000/userdata/trash/${userMail}`)
+            .get(`https://my-simple-crud-hlan.vercel.app/userdata/trash/${userMail}`)
             .then((response) => {
                 setUserData(response.data);
             })
@@ -21,7 +21,7 @@ function recycleBin() {
     }, []);
     function handleRestore() {}
     function handleDeleteParmanent(slug, photoURL) {
-        axios.delete(`http://localhost:4000/userdata/trash/delete/` + slug);
+        axios.delete(`https://my-simple-crud-hlan.vercel.app/userdata/trash/delete/` + slug);
         window.location.href = '/home/trash';
         // console.log(photoURL);
         // let pictureRef = storage.refFromURL(

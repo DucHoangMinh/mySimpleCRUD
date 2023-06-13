@@ -39,7 +39,7 @@ function register() {
 
     function handleOnChangeEmail(e) {
         setRegisterMessage('');
-        var api = 'http://localhost:4000/userinfor';
+        var api = 'https://my-simple-crud-hlan.vercel.app/userinfor';
         fetch(api)
             .then((reponse) => reponse.json())
             .then((userInfor) => {
@@ -92,7 +92,9 @@ function register() {
                 email: userMail,
                 password: userPass,
             };
-            axios.post('http://localhost:4000/userinfor/add', newUserInfor).then((res) => console.log(res.data));
+            axios
+                .post('https://my-simple-crud-hlan.vercel.app/userinfor/add', newUserInfor)
+                .then((res) => console.log(res.data));
             setUserName('');
             setReUserPass('');
             setUserPass('');

@@ -24,7 +24,7 @@ function home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/rules-of-hooks
     useEffect(function () {
         axios
-            .get(`http://localhost:4000/userdata/${userMail}`)
+            .get(`https://my-simple-crud-hlan.vercel.app/userdata/${userMail}`)
             .then((response) => {
                 setUserData(response.data);
             })
@@ -37,7 +37,7 @@ function home() {
         window.location.href = '/';
     }
     function handleDelete(slug) {
-        axios.put(`http://localhost:4000/userdata/softdelete/` + slug, { onGarbage: true });
+        axios.put(`https://my-simple-crud-hlan.vercel.app/userdata/softdelete/` + slug, { onGarbage: true });
     }
 
     return (

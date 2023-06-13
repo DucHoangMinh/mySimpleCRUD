@@ -18,7 +18,7 @@ function login() {
             setLogInMessage('Tài khoản không được để trống !!!');
         } else {
             setLogInMessage('');
-            fetch('http://localhost:4000/userinfor')
+            fetch('https://my-simple-crud-hlan.vercel.app/userinfor')
                 .then(function (response) {
                     return response.json();
                 })
