@@ -13,7 +13,6 @@ function register() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [reUserPass, setReUserPass] = useState('');
 
-    const inputName = document.getElementById('inputName');
     // eslint-disable-next-line react-hooks/rules-of-hooks
     var [inputNameMessage, setInputNameMessage] = useState(' ');
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -28,6 +27,7 @@ function register() {
     function handleOnChangeName(e) {
         setUserName(e.target.value);
         setRegisterMessage('');
+        const inputName = document.getElementById('inputName');
         inputName.onblur = () => {
             if (!inputName.value) {
                 setInputNameMessage('Tên của bạn không được để trống!!!');
@@ -117,14 +117,14 @@ function register() {
                                 <div className="card-body p-md-5">
                                     <div className="row justify-content-center">
                                         <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                                            <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                                            <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Đăng Ký</p>
 
                                             <form className="mx-1 mx-md-4" n onSubmit={handleSubmit}>
                                                 <div className="d-flex flex-row align-items-center mb-2">
                                                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
                                                         <label className="form-label" for="form3Example1c">
-                                                            Your Name
+                                                            Tên của bạn
                                                         </label>
                                                         <input
                                                             value={userName}
@@ -133,6 +133,7 @@ function register() {
                                                             className="form-control"
                                                             name="name"
                                                             onChange={handleOnChangeName}
+                                                            placeholder="Ex : Nguyễn Văn A"
                                                         />
                                                         <label id="inputNameMessage" className={style.statusMessage}>
                                                             {inputNameMessage}
@@ -144,7 +145,7 @@ function register() {
                                                     <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
                                                         <label className="form-label" for="form3Example3c">
-                                                            Your Email
+                                                            Email
                                                         </label>
                                                         <input
                                                             value={userMail}
@@ -153,6 +154,7 @@ function register() {
                                                             className="form-control"
                                                             name="email"
                                                             onChange={handleOnChangeEmail}
+                                                            placeholder="Ex : 123@gmail.com"
                                                         />
                                                         <label id="inputEmailMessage" className={style.statusMessage}>
                                                             {inputEmailMessage}
@@ -164,7 +166,7 @@ function register() {
                                                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
                                                         <label className="form-label" for="form3Example4c">
-                                                            Password
+                                                            Mật khẩu
                                                         </label>
                                                         <input
                                                             value={userPass}
@@ -184,7 +186,7 @@ function register() {
                                                     <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
                                                         <label className="form-label" for="form3Example4cd">
-                                                            Repeat your password
+                                                            Nhập lại mật khẩu
                                                         </label>
                                                         <input
                                                             value={reUserPass}
@@ -201,7 +203,7 @@ function register() {
 
                                                 <div className="form-check d-flex justify-content-center mb-5">
                                                     <label className="form-check-label" for="form2Example3">
-                                                        Have an account ? <Link to={'/'}>Sign in</Link>
+                                                        Đã có tài khoản ? <Link to={'/'}>Đăng nhập</Link>
                                                     </label>
                                                 </div>
                                                 <div className=" mx-4 mb-3 mb-lg-4">

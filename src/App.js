@@ -13,7 +13,7 @@ import Home from './components/mainProgram/home.component';
 import Add from './components/mainProgram/add.component';
 import Update from './components/mainProgram/update.component';
 import RecycleBin from './components/mainProgram/recycleBin.component';
-
+import DefaultPage from './components/mainProgram/defaultPage.component';
 function handleLogOut() {
     localStorage.removeItem('userMail');
     window.location.href = '/';
@@ -23,7 +23,8 @@ class App extends Component {
         return (
             <div className="container">
                 <Routes>
-                    <Route path="/" element={<Login />} />
+                    <Route path="/" element={<DefaultPage />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/add" element={<Add />}></Route>
