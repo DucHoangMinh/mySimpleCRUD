@@ -1,6 +1,5 @@
 // index.js
-const uri =
-    'mongodb+srv://hoangminhduc4125:hoangminhduc04122003@cluster0.s8cgc8w.mongodb.net/?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://hoangminhduc4125:hoangminhduc4125@cluster0.55ss9pa.mongodb.net/?retryWrites=true&w=majority';
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -29,7 +28,7 @@ app.use('/userdata', userDataRoute);
 app.get('/', (req, res) => {
     res.send('Hey this is my API running 🥳');
 });
-app.listen(PORT, function () {
-    console.log('Server is running on Port:', PORT);
-});
+// app.listen(PORT, function () {
+//     console.log('Server is running on Port:', PORT);
+// });
 module.exports = app;
