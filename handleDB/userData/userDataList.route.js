@@ -88,7 +88,7 @@ userDataRoute.put('/trash/restore/:slug', function (req, res) {
         {
             slug: `${req.params.slug}`,
         },
-        { onGarbage: req.body.onGarbage },
+        { onGarbage: false },
     );
 });
 module.exports = userDataRoute;

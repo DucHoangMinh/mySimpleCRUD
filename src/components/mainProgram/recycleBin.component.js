@@ -21,9 +21,9 @@ function recycleBin() {
     }, []);
     function handleRestore(slug) {
         axios.put(`https://my-simple-crud-hlan.vercel.app/userdata/trash/restore/` + slug, { onGarbage: false });
-        // setTimeout(function () {
-        //     window.location.href = '/home/trash';
-        // }, 500);
+        setTimeout(function () {
+            window.location.href = '/home/trash';
+        }, 500);
     }
     function handleDeleteParmanent(slug, photoURL) {
         axios.delete(`https://my-simple-crud-hlan.vercel.app/userdata/trash/delete/` + slug);
