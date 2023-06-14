@@ -19,7 +19,12 @@ function recycleBin() {
                 console.log(error);
             });
     }, []);
-    function handleRestore() {}
+    function handleRestore(slug) {
+        axios.put(`https://my-simple-crud-hlan.vercel.app/userdata/trash/restore/` + slug, { onGarbage: false });
+        // setTimeout(function () {
+        //     window.location.href = '/home/trash';
+        // }, 500);
+    }
     function handleDeleteParmanent(slug, photoURL) {
         axios.delete(`https://my-simple-crud-hlan.vercel.app/userdata/trash/delete/` + slug);
         setTimeout(function () {
@@ -54,7 +59,10 @@ function recycleBin() {
                                     <p class={style['card-text']}>{data.description}</p>
                                     <p class={style['card-price']}>Giá : {data.price} vnđ</p>
                                     <div className="row justify-content-between">
-                                        <Link onClick={handleRestore} class="btn btn-outline-success btn-sm mb-4">
+                                        <Link
+                                            onClick={() => handleRestore(data.slug)}
+                                            class="btn btn-outline-success btn-sm mb-4"
+                                        >
                                             Hoàn tác
                                         </Link>
                                         <Button
