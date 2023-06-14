@@ -95,12 +95,14 @@ function home() {
                                             <Link
                                                 to={{ pathname: `/home/update/${data.slug}`, state: `${data.name}` }}
                                                 class="btn btn-outline-success btn-sm"
+                                                style={{ padding: '8px' }}
                                             >
                                                 Chỉnh sửa
                                             </Link>
                                             <Button
                                                 class="btn btn-outline-warning"
                                                 onClick={() => handleDelete(data.slug)}
+                                                style={{ float: 'right', width: '100px' }}
                                             >
                                                 Xóa
                                             </Button>
