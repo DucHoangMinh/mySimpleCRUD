@@ -4,6 +4,7 @@ import axios from 'axios';
 import style from '../../scss/home.module.scss';
 import { Button } from 'react-bootstrap';
 import { storage } from '../../firebase';
+import { getStorage, ref, deleteObject } from 'firebase/storage';
 function recycleBin() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [userData, setUserData] = useState([]);
@@ -27,27 +28,24 @@ function recycleBin() {
     }
     function handleDeleteParmanent(slug, photoURL) {
         axios.delete(`https://my-simple-crud-hlan.vercel.app/userdata/trash/delete/` + slug);
+        // console.log(photoURL);
+        const desertRef = ref(storage, 'gs://my-simple-crud-f5b5c.appspot.com/files/_MG_9519.JPG');
+        deleteObject(desertRef)
+            .then(() => {
+                // File deleted successfully
+            })
+            .catch((error) => {
+                // Uh-oh, an error occurred!
+            });
         setTimeout(function () {
             window.location.href = '/home/trash';
-        }, 500);
-        // console.log(photoURL);
-        // let pictureRef = storage.refFromURL(
-        //     'gs://my-simple-crud-f5b5c.appspot.com/o/files%2Fan-nut-nho-tha-giac-mo.jpg',
-        // );
-        // pictureRef
-        //     .delete()
-        //     .then(() => {
-        //         //3.
-        //         // setImages(allImages.filter((image) => image !== url));
-        //         alert('Picture is deleted successfully!');
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
+        }, 800);
     }
     return (
         <div>
-            <h1>Danh sách sản phẩm trong thùng rác của bạn </h1>
+            <h2 className="mt-4 mb-5" style={{ textAlign: 'center' }}>
+                Danh sách sản phẩm trong thùng rác của bạn{' '}
+            </h2>
             <div class="row">
                 {userData.map(function (data) {
                     return (

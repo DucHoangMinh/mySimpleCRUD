@@ -13,13 +13,13 @@ import Modal from 'react-bootstrap/Modal';
 function home() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [userData, setUserData] = useState([]);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [userInfor, setUserInfor] = useState({});
     const userMail = localStorage.getItem('userMail');
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [modalShow, setModalShow] = useState(false);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [deleteTitle, setDeleteTitle] = useState('Xóa');
+    // // eslint-disable-next-line react-hooks/rules-of-hooks
+    // const [userInfor, setUserInfor] = useState({});
+    // // eslint-disable-next-line react-hooks/rules-of-hooks
+    // const [modalShow, setModalShow] = useState(false);
+    // // eslint-disable-next-line react-hooks/rules-of-hooks
+    // const [deleteTitle, setDeleteTitle] = useState('Xóa');
 
     // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/rules-of-hooks
     useEffect(function () {
@@ -57,9 +57,9 @@ function home() {
                         <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
                             <Nav.Link href="#action1"></Nav.Link>
                         </Nav>
-                        <NavDropdown className="" title="Tài khoản" id="navbarScrollingDropdown">
-                            <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action4">Another action</NavDropdown.Item>
+                        <NavDropdown className="" title="Tài khoản của bạn" id="navbarScrollingDropdown">
+                            <NavDropdown.Item href="#"></NavDropdown.Item>
+                            <NavDropdown.Item href="#"></NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action5" onClick={handleLogOut}>
                                 Đăng xuất
@@ -105,13 +105,6 @@ function home() {
                                                 Xóa
                                             </Button>
                                         </div>
-                                        {/* <Button
-                                            className="btn-warning"
-                                            onClick={handleDelete(data.slug)}
-                                            hidden={!modalShow}
-                                        >
-                                            Xác nhận xóa
-                                        </Button> */}
                                     </div>
                                 </div>
                             );

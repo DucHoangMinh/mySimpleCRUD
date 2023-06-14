@@ -5,6 +5,7 @@ import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import style from '../../scss/addPage.module.scss';
 function add() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [show, setShow] = useState(false);
@@ -27,7 +28,11 @@ function add() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [message, setMessage] = useState('');
     const handleClose = () => setShow(false);
-    const handleShow = () => okStatus && setShow(true);
+    const handleShow = () =>
+        okStatus &&
+        setTimeout(function () {
+            setShow(true);
+        }, 800);
     function handleSubmit(e) {
         console.log(pimage);
         if (pimage !== 0) {
@@ -72,6 +77,9 @@ function add() {
     }
     return (
         <div>
+            <h2 className="mb-5 mt-3" style={{ textAlign: 'center' }}>
+                Thêm một sản phẩm mới vào danh sách quản lý của bạn
+            </h2>
             <form>
                 <div class="form-group mb-4">
                     <label for="formGroupExampleInput">Tên sản phẩm</label>
@@ -116,8 +124,8 @@ function add() {
                     <br />
                     <input
                         type="file"
-                        class="custom-file-input"
-                        id="customFile"
+                        className={style['inputFile']}
+                        // id="customFile"
                         accept=".jpeg,.jpg,.png"
                         onChange={(e) => {
                             setPimage(e.target.files[0]);
@@ -126,7 +134,16 @@ function add() {
                     />
                 </div>
             </form>
-            <Button type="button" onClickCapture={handleSubmit} variant="primary" onClick={handleShow}>
+            <Link to="/home" class={style['toPrevious']}>
+                &laquo; Về trang chủ
+            </Link>
+            <Button
+                style={{ float: 'right' }}
+                type="button"
+                onClickCapture={handleSubmit}
+                variant="primary"
+                onClick={handleShow}
+            >
                 Thêm vào danh sách
             </Button>
             <p className="text-danger">{message}</p>
