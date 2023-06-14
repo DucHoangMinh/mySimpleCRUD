@@ -84,11 +84,16 @@ userDataRoute.delete('/trash/delete/:slug', function (req, res) {
         });
 });
 userDataRoute.put('/trash/restore/:slug', function (req, res) {
-    userDataListModel.updateOne(
-        {
-            slug: `${req.params.slug}`,
-        },
-        { onGarbage: false },
-    );
+    userDataListModel
+        .updateOne(
+            {
+                slug: `${req.params.slug}`,
+            },
+            { onGarbage: false },
+        )
+        .then((result) => console.log(result))
+        .catch((err) => {
+            console.error(err);
+        });
 });
 module.exports = userDataRoute;
